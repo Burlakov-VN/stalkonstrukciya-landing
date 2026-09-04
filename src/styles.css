@@ -1,0 +1,75 @@
+@import "tailwindcss";
+
+/* ============================================================
+ * «Стальконструкция» — Precision Blueprint design tokens
+ * ============================================================ */
+@theme {
+  --color-sk-bg: #f7f6f2; /* Concrete White */
+  --color-sk-bg-alt: #eeede7;
+  --color-sk-surface: #ffffff;
+  --color-sk-border: #d7dbe0;
+  --color-sk-steel: #1c3d5a; /* Steel Blue */
+  --color-sk-ink: #16232e;
+  --color-sk-accent: #f4671e; /* Safety Orange */
+  --color-sk-text-2: #5c6b77;
+  --color-sk-text-3: #93a0aa;
+  --color-sk-success: #1e8e5a;
+
+  --font-sk-display: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --font-sk-body: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-sk-mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+html {
+  background-color: var(--color-sk-bg);
+  color: var(--color-sk-ink);
+  color-scheme: light;
+}
+
+body {
+  min-height: 100vh;
+  background-color: var(--color-sk-bg);
+  color: var(--color-sk-ink);
+  font-family: var(--font-sk-body);
+}
+
+/* Blueprint grid background — 32px, Steel Blue at low opacity, used behind
+ * hero / CTA sections per the design guideline. */
+.sk-blueprint-grid {
+  background-image:
+    linear-gradient(rgba(28, 61, 90, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(28, 61, 90, 0.05) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* Dimension-line: thin Steel Blue rule with perpendicular tick marks at each
+ * end, used between process steps. */
+.sk-dim-line {
+  position: relative;
+  height: 1px;
+  background: rgba(28, 61, 90, 0.35);
+}
+.sk-dim-line::before,
+.sk-dim-line::after {
+  content: "";
+  position: absolute;
+  top: -4px;
+  width: 1px;
+  height: 9px;
+  background: rgba(28, 61, 90, 0.45);
+}
+.sk-dim-line::before {
+  left: 0;
+}
+.sk-dim-line::after {
+  right: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.001ms !important;
+    animation-duration: 0.001ms !important;
+  }
+}
