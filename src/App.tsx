@@ -6,6 +6,7 @@ import { Uslugi } from "./components/site/Uslugi";
 import { Garantii } from "./components/site/Garantii";
 import { Proizvodstvo } from "./components/site/Proizvodstvo";
 import { Otrasli } from "./components/site/Otrasli";
+import { PochemuVybirayutNas } from "./components/site/PochemuVybirayutNas";
 import { Proekty } from "./components/site/Proekty";
 import { Blog } from "./components/site/Blog";
 import { Prozrachnost } from "./components/site/Prozrachnost";
@@ -20,11 +21,12 @@ export function App() {
       <main>
         <Hero />
         <OKompanii />
+        <Otrasli />
+        <PochemuVybirayutNas />
         <Cikl />
         <Uslugi />
         <Garantii />
         <Proizvodstvo />
-        <Otrasli />
         <Proekty />
         <Blog />
         <Prozrachnost />

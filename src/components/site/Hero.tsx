@@ -15,7 +15,7 @@ export function Hero() {
         </span>
 
         <h1 className="mt-4 max-w-[620px] font-sk-display text-[34px] font-extrabold leading-[1.1] tracking-tight text-white md:text-[52px]">
-          Промышленное здание под ключ — с гарантиями, а не обещаниями
+          Работаем там, где надёжность критична: нефтегаз, химия, энергетика
         </h1>
 
         <p className="mt-5 max-w-[480px] text-[16px] leading-relaxed text-white/80">

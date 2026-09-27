@@ -34,6 +34,11 @@ export function Otrasli() {
         <h2 className="max-w-[560px] font-sk-display text-[28px] font-bold leading-tight text-sk-ink md:text-[34px]">
           Отрасли
         </h2>
+        <p className="mt-4 max-w-[760px] text-[16px] leading-relaxed text-sk-ink">
+          Мы поставляем металлоконструкции для промышленных объектов любого уровня
+          сложности. Среди наших ключевых заказчиков — предприятия следующих
+          отраслей:
+        </p>
 
         <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-4">
           {INDUSTRIES.map((ind) => (
