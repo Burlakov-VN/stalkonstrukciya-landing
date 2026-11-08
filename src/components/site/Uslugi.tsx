@@ -19,8 +19,8 @@ export function Uslugi() {
                 Проектирование
               </h3>
               <p className="mt-3 text-[14px] leading-relaxed text-sk-text-2">
-                КМ, КМД, независимая проверка расчёта. Малый чек, короткий
-                срок — не обязывает на полный цикл строительства.
+                Проектная и рабочая документация: стадии П и Р, КМ, КМД.
+                Самостоятельная услуга или начало полного цикла строительства.
               </p>
             </div>
             <span className="mt-6 inline-flex items-center gap-2 text-[14px] font-semibold text-sk-steel">
@@ -43,8 +43,8 @@ export function Uslugi() {
                 Комплексная поставка
               </h3>
               <p className="mt-2 text-[14px] leading-relaxed text-sk-text-2">
-                Металлоконструкции и сэндвич-панели под вашу спецификацию,
-                без монтажа.
+                Металлоконструкции, ограждающие конструкции, оборудование
+                и материалы по проекту. Один поставщик и единый график.
               </p>
             </div>
             <span className="mt-5 inline-flex items-center gap-2 text-[14px] font-semibold text-sk-steel">

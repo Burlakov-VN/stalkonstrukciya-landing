@@ -1,6 +1,9 @@
+import { imageVariants } from "../../data/images";
+
 const QUALITY = ["ОТК на каждом этапе", "НК сварных швов", "Аттестация НАКС", "Сертификаты на металл по партиям"];
 
 export function Proizvodstvo() {
+  const image = imageVariants["/assets/proizvodstvo-photo.jpg"]!;
   return (
     <section id="proizvodstvo" className="border-t border-sk-border bg-sk-bg">
       <div className="mx-auto grid max-w-[1180px] gap-10 px-4 py-16 md:grid-cols-2 md:items-center md:px-6 md:py-20">
@@ -33,7 +36,13 @@ export function Proizvodstvo() {
 
         <div className="relative border border-sk-border">
           <img
-            src="/assets/proizvodstvo-photo.jpg"
+            src={image.src}
+            srcSet={image.srcSet}
+            sizes="(min-width: 768px) 560px, 100vw"
+            width={image.width}
+            height={image.height}
+            loading="lazy"
+            decoding="async"
             alt="Собственное производство металлоконструкций"
             className="aspect-[4/3] w-full object-cover"
           />

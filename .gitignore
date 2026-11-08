@@ -5,3 +5,9 @@ dist
 
 # Local Netlify folder
 .netlify
+.prerender
+.env
+.env.*
+!.env.example
+playwright-report
+test-results

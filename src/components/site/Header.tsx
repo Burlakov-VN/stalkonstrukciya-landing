@@ -1,119 +1,57 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { companyNavigation } from "../../data/navigation";
+import { ContactDetails, MessengerButtons } from "./ContactButtons";
+import { imageVariants } from "../../data/images";
 
-const NAV = [
-  { label: "О компании", href: "/o-kompanii/" },
-  { label: "Продукция", href: "/produkciya/" },
-  {
-    label: "Услуги",
-    href: "/proektirovanie/",
-    children: [
-      { label: "Проектирование", href: "/proektirovanie/" },
-      { label: "Комплексная поставка", href: "/postavka/" },
-      { label: "Монтаж", href: "/montazh/" },
-    ],
-  },
-  { label: "Производство", href: "/proizvodstvo/" },
-  { label: "Проекты", href: "/proekty/" },
-  { label: "Блог", href: "/blog/" },
-  { label: "Контакты", href: "/kontakty/" },
+const navigation = [
+  { title: "Продукция", href: "/produkciya/" },
+  { title: "Отрасли", href: "/otrasli/" },
+  { title: "Контакты", href: "/kontakty/" },
 ];
+const services = [{ title: "Проектирование", href: "/proektirovanie/" }, { title: "Комплексная поставка", href: "/postavka/" }, { title: "Монтажные работы", href: "/montazh/" }];
 
-export function Header() {
+export function Header({ path = "/" }: { path?: string }) {
+  const logo = imageVariants["/brand/mark-square.png"]!;
   const [open, setOpen] = useState(false);
-
-  return (
-    <header className="sticky top-0 z-40 border-b border-sk-border bg-sk-bg/95 backdrop-blur">
-      <div className="mx-auto flex max-w-[1180px] items-center justify-between gap-6 px-4 py-3 md:px-6">
-        <a href="/" className="flex items-center gap-2 shrink-0">
-          <img
-            src="/brand/mark-square.png"
-            alt="Стальконструкция"
-            className="h-9 w-9"
-          />
-          <span className="font-sk-display text-[15px] font-bold leading-tight text-sk-ink">
-            Стальконструкция
-          </span>
-        </a>
-
-        <nav className="hidden lg:flex items-center gap-6 font-sk-body text-[14px] text-sk-ink">
-          {NAV.map((item) => (
-            <div key={item.label} className="relative group">
-              <a
-                href={item.href}
-                className="py-2 hover:text-sk-steel transition-colors"
-              >
-                {item.label}
-                {item.children && <span className="ml-1 text-sk-text-3">▾</span>}
-              </a>
-              {item.children && (
-                <div className="absolute left-0 top-full hidden min-w-[220px] flex-col border border-sk-border bg-sk-surface py-2 shadow-[0_8px_24px_rgba(22,35,46,0.08)] group-hover:flex">
-                  {item.children.map((c) => (
-                    <a
-                      key={c.href}
-                      href={c.href}
-                      className="px-4 py-2 hover:bg-sk-bg-alt hover:text-sk-steel"
-                    >
-                      {c.label}
-                    </a>
-                  ))}
-                </div>
-              )}
-            </div>
-          ))}
-        </nav>
-
-        <div className="hidden md:flex items-center gap-4">
-          <a
-            href="tel:+70000000000"
-            className="font-sk-mono text-[13px] text-sk-text-2"
-          >
-            [ТЕЛЕФОН]
-          </a>
-          <a
-            href="#raschet"
-            className="bg-sk-accent px-4 py-2.5 text-[14px] font-semibold text-white transition-[filter] hover:brightness-95"
-          >
-            Получить расчёт →
-          </a>
-        </div>
-
-        <button
-          type="button"
-          aria-label="Открыть меню"
-          className="lg:hidden flex flex-col gap-1.5 p-2"
-          onClick={() => setOpen((v) => !v)}
-        >
-          <span className="block h-[1.5px] w-6 bg-sk-ink" />
-          <span className="block h-[1.5px] w-6 bg-sk-ink" />
-          <span className="block h-[1.5px] w-6 bg-sk-ink" />
-        </button>
-      </div>
-
-      {open && (
-        <div className="lg:hidden border-t border-sk-border bg-sk-surface px-4 py-4">
-          <nav className="flex flex-col gap-1 font-sk-body text-[15px] text-sk-ink">
-            {NAV.flatMap((item) =>
-              item.children
-                ? [item, ...item.children]
-                : [item],
-            ).map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                className="py-2.5 border-b border-sk-border last:border-0"
-              >
-                {item.label}
-              </a>
-            ))}
-          </nav>
-          <a
-            href="#raschet"
-            className="mt-4 block bg-sk-accent px-4 py-3 text-center text-[14px] font-semibold text-white"
-          >
-            Получить расчёт →
-          </a>
-        </div>
-      )}
-    </header>
-  );
+  useEffect(() => {
+    const closeOutside = (event: PointerEvent) => {
+      document.querySelectorAll<HTMLDetailsElement>(".desktop-nav details[open]").forEach(menu => { if (!menu.contains(event.target as Node)) menu.open = false; });
+    };
+    const closeEscape = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+      document.querySelectorAll<HTMLDetailsElement>(".desktop-nav details[open]").forEach(menu => { menu.open = false; if (menu.contains(document.activeElement)) menu.querySelector("summary")?.focus(); });
+    };
+    const resize = () => { if (window.innerWidth >= 1280) setOpen(false); };
+    document.addEventListener("pointerdown", closeOutside);
+    document.addEventListener("keydown", closeEscape);
+    window.addEventListener("resize", resize);
+    return () => { document.removeEventListener("pointerdown", closeOutside); document.removeEventListener("keydown", closeEscape); window.removeEventListener("resize", resize); };
+  }, []);
+  useEffect(() => {
+    if (!open) return;
+    const listener = (event: KeyboardEvent) => { if (event.key === "Escape") { setOpen(false); document.getElementById("menu-toggle")?.focus(); } };
+    const previous = document.body.style.overflow; document.body.style.overflow = "hidden";
+    document.addEventListener("keydown", listener);
+    return () => { document.body.style.overflow = previous; document.removeEventListener("keydown", listener); };
+  }, [open]);
+  const active = (href: string) => path === href ? "page" as const : undefined;
+  return <header className="site-header"><div className="header-container">
+    <a href="/" className="brand-link" aria-label="Стальконструкция — главная"><img src={logo.src} srcSet={logo.srcSet} sizes="36px" alt="" width="36" height="36" /><span>Корпорация<br /><strong>Стальконструкция</strong></span></a>
+    <nav className="desktop-nav" aria-label="Основная навигация">
+      <details className="services-menu company-menu"><summary className={companyNavigation.some(item => item.href === path) ? "is-active" : undefined}>О компании <span aria-hidden="true">⌄</span></summary><div>{companyNavigation.map(item => <a key={item.href} href={item.href} aria-current={active(item.href)}>{item.title}</a>)}</div></details>
+      {navigation.slice(0, 1).map(item => <a key={item.href} href={item.href} aria-current={active(item.href)}>{item.title}</a>)}
+      <details className="services-menu"><summary className={services.some(item => item.href === path) ? "is-active" : undefined}>Услуги <span aria-hidden="true">⌄</span></summary><div>{services.map(item => <a key={item.href} href={item.href} aria-current={active(item.href)}>{item.title}</a>)}</div></details>
+      {navigation.slice(1).map(item => <a key={item.href} href={item.href} aria-current={active(item.href)}>{item.title}</a>)}
+    </nav>
+    <div className="header-contact-actions"><ContactDetails /><MessengerButtons /><a className="button-primary header-cta" href="#raschet">Получить расчёт <span aria-hidden="true">↗</span></a></div>
+    <button id="menu-toggle" className="menu-toggle" type="button" aria-expanded={open} aria-controls="mobile-navigation" aria-label={open ? "Закрыть меню" : "Открыть меню"} onClick={() => setOpen(value => !value)}><span>{open ? "×" : "☰"}</span></button>
+  </div>
+    <nav id="mobile-navigation" aria-label="Мобильная навигация" className="mobile-navigation" hidden={!open} onClick={event => { if ((event.target as HTMLElement).closest("a")) setOpen(false); }}>
+      <a href="/" aria-current={active("/")}>Главная<span aria-hidden="true">↗</span></a>
+      <details className="mobile-company-menu" open={companyNavigation.some(item => item.href === path) || undefined}><summary>О компании <span aria-hidden="true">⌄</span></summary><div>{companyNavigation.map(item => <a key={item.href} href={item.href} aria-current={active(item.href)}>{item.title}<span aria-hidden="true">↗</span></a>)}</div></details>
+      {[...navigation.slice(0, 1), ...services, ...navigation.slice(1)].map(item => <a key={item.href} href={item.href} aria-current={active(item.href)}>{item.title}<span aria-hidden="true">↗</span></a>)}
+      <div className="mobile-contact-panel"><ContactDetails /><MessengerButtons labels /><p>Контакты мессенджеров будут добавлены перед запуском.</p></div>
+      <a className="button-primary" href="#raschet">Получить расчёт</a>
+    </nav>
+  </header>;
 }

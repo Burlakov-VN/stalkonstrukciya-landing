@@ -1,3 +1,5 @@
+import { imageVariants } from "../../data/images";
+
 // Shared 4×2 sprite reader for the generated icon sets
 // (icons-process.png, icons-industries.png — both cut from the same grid).
 export function IconSprite({
@@ -20,7 +22,7 @@ export function IconSprite({
       style={{
         width: size,
         height: size,
-        backgroundImage: `url(${src})`,
+        backgroundImage: `url(${imageVariants[src]?.src ?? src})`,
         backgroundSize: "400% 200%",
         backgroundPosition: `${(col / 3) * 100}% ${row * 100}%`,
         backgroundRepeat: "no-repeat",

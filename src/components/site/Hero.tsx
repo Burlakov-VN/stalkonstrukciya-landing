@@ -1,11 +1,23 @@
+import { imageVariants } from "../../data/images";
+
 export function Hero() {
+  const image = imageVariants["/assets/hero.jpg"]!;
+  const mobile = imageVariants["hero-mobile"]!;
   return (
     <section id="hero" className="relative overflow-hidden bg-sk-ink">
-      <img
-        src="/assets/hero.jpg"
+      <picture className="absolute inset-0 block h-full w-full">
+        <source media="(max-width: 599px)" srcSet={mobile.srcSet} sizes="100vw" />
+        <img
+        src={image.src}
+        srcSet={image.srcSet}
+        sizes="100vw"
+        width={image.width}
+        height={image.height}
+        fetchPriority="high"
         alt="Промышленное здание под ключ — монтаж металлоконструкций"
-        className="absolute inset-0 h-full w-full object-cover opacity-90"
+        className="h-full w-full object-cover opacity-90"
       />
+      </picture>
       <div className="absolute inset-0 bg-gradient-to-r from-sk-ink/85 via-sk-ink/55 to-sk-ink/10" />
       <div className="sk-blueprint-grid absolute inset-0 opacity-[0.15] mix-blend-overlay" />
 
@@ -15,10 +27,11 @@ export function Hero() {
         </span>
 
         <h1 className="mt-4 max-w-[620px] font-sk-display text-[34px] font-extrabold leading-[1.1] tracking-tight text-white md:text-[52px]">
-          Работаем там, где надёжность критична: нефтегаз, химия, энергетика
+          Здания и сооружения из металлоконструкций
         </h1>
 
         <p className="mt-5 max-w-[480px] text-[16px] leading-relaxed text-white/80">
+          Работаем там, где надёжность критична: нефтегаз, химия, энергетика.
           Проектирование, собственное производство и монтаж в одном контракте.
         </p>
 
@@ -33,10 +46,10 @@ export function Hero() {
             </span>
           </a>
           <a
-            href="tel:+70000000000"
+            href="/produkciya/"
             className="border border-white/30 px-6 py-3.5 text-[15px] font-semibold text-white hover:border-white/60"
           >
-            [ТЕЛЕФОН]
+            Смотреть продукцию
           </a>
         </div>
       </div>

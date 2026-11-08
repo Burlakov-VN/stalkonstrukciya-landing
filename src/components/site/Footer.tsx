@@ -1,93 +1,12 @@
-const INDUSTRIES = [
-  { label: "Нефтегазовая отрасль", href: "/otrasli/neftegaz/" },
-  { label: "Нефтепереработка и нефтехимия", href: "/otrasli/neftepererabotka-neftehimiya/" },
-  { label: "Химическая промышленность", href: "/otrasli/himicheskaya-promyshlennost/" },
-  { label: "Энергетика", href: "/otrasli/energetika/" },
-  { label: "Металлургическая и горнодобывающая", href: "/otrasli/metallurgiya-gornodobycha/" },
-  { label: "Коммерческие и промышленные объекты", href: "/otrasli/kommercheskie-promyshlennye-obekty/" },
-  { label: "Сельское хозяйство", href: "/otrasli/selskoe-hozyaystvo/" },
-];
+import { industries, industryPath } from "../../data/industries";
+import { companyNavigation } from "../../data/navigation";
 
-const PAGES = [
-  { label: "Главная", href: "/" },
-  { label: "О компании", href: "/o-kompanii/" },
-  { label: "Продукция", href: "/produkciya/" },
-  { label: "Проектирование", href: "/proektirovanie/" },
-  { label: "Комплексная поставка", href: "/postavka/" },
-  { label: "Монтаж", href: "/montazh/" },
-  { label: "Производство", href: "/proizvodstvo/" },
-  { label: "Отрасли", href: "/otrasli/" },
-  { label: "Проекты", href: "/proekty/" },
-  { label: "Блог", href: "/blog/" },
-  { label: "Контакты", href: "/kontakty/" },
-];
-
+const links = [{ title: "Главная", href: "/" }, { title: "О компании", href: "/o-kompanii/" }, { title: "Продукция", href: "/produkciya/" }, { title: "Проектирование", href: "/proektirovanie/" }, { title: "Комплексная поставка", href: "/postavka/" }, { title: "Монтажные работы", href: "/montazh/" }, { title: "Производство", href: "/proizvodstvo/" }, { title: "Отрасли", href: "/otrasli/" }, { title: "Проекты", href: "/proekty/" }, { title: "Блог", href: "/blog/" }, { title: "Контакты", href: "/kontakty/" }];
 export function Footer() {
-  return (
-    <footer className="bg-sk-ink text-white/80">
-      <div className="mx-auto max-w-[1180px] px-4 py-14 md:px-6">
-        <div className="grid gap-10 md:grid-cols-4">
-          <div>
-            <div className="flex items-center gap-2">
-              <img
-                src="/brand/mark-square.png"
-                alt="Стальконструкция"
-                className="h-8 w-8 brightness-0 invert"
-              />
-              <span className="font-sk-display text-[15px] font-bold text-white">
-                Стальконструкция
-              </span>
-            </div>
-            <p className="mt-3 max-w-[220px] text-[13px] leading-relaxed text-white/60">
-              Промышленные здания под ключ. Проектирование, производство,
-              монтаж в одном контракте.
-            </p>
-          </div>
-
-          <nav className="flex flex-col gap-2 text-[13px]">
-            <span className="mb-1 font-sk-mono text-[11px] uppercase tracking-wide text-white/40">
-              Навигация
-            </span>
-            {PAGES.map((p) => (
-              <a key={p.href} href={p.href} className="hover:text-white">
-                {p.label}
-              </a>
-            ))}
-          </nav>
-
-          <nav className="flex flex-col gap-2 text-[13px]">
-            <span className="mb-1 font-sk-mono text-[11px] uppercase tracking-wide text-white/40">
-              Отрасли
-            </span>
-            {INDUSTRIES.map((i) => (
-              <a key={i.href} href={i.href} className="hover:text-white">
-                {i.label}
-              </a>
-            ))}
-            <a href="/otrasli/drugoe/" className="hover:text-white">
-              Другое — по запросу
-            </a>
-          </nav>
-
-          <div className="flex flex-col gap-2 text-[13px]">
-            <span className="mb-1 font-sk-mono text-[11px] uppercase tracking-wide text-white/40">
-              Контакты
-            </span>
-            <span className="text-white/60">Телефон: [ТЕЛЕФОН]</span>
-            <span className="text-white/60">Telegram: [TELEGRAM]</span>
-            <span className="text-white/60">Email: [EMAIL]</span>
-            <span className="mt-2 text-white/60">Работаем по всей России</span>
-          </div>
-        </div>
-
-        <div className="mt-12 flex flex-col gap-2 border-t border-white/10 pt-6 font-sk-mono text-[11px] text-white/40 md:flex-row md:items-center md:justify-between">
-          <span>
-            ООО «Корпорация Стальконструкция» · ИНН 7453273591 · ОГРН
-            1147453010231
-          </span>
-          <span>454080, Челябинск, ул. Тернопольская, д. 6, пом. 124</span>
-        </div>
-      </div>
-    </footer>
-  );
+  return <footer className="site-footer"><div className="page-container"><div className="footer-grid">
+    <div><a className="footer-brand" href="/">Корпорация<br />Стальконструкция</a><p>Здания и сооружения из металлоконструкций. Проектирование, производство и монтаж.</p><span className="kicker">С 1995 года · Вся Россия</span></div>
+    <nav aria-label="Разделы сайта"><h2>Навигация</h2>{links.filter(link => !companyNavigation.some(item => item.href === link.href)).map(link => <a key={link.href} href={link.href}>{link.title}</a>)}<div className="footer-company-group"><a href="/o-kompanii/" className="footer-group-title">О компании</a>{companyNavigation.slice(1).map(link => <a key={link.href} href={link.href}>{link.title}</a>)}</div></nav>
+    <nav aria-label="Отрасли"><h2>Продукция по отраслям</h2>{industries.map(industry => <a key={industry.slug} href={industryPath(industry)}>{industry.title}</a>)}<a href="/produkciya/#po-chertezham">По чертежам заказчика</a></nav>
+    <div><h2>Контакты</h2><span className="test-label">Тестовые данные</span><p>+7 (000) 000-00-00<br />info@example.com<br />Telegram: не указан</p><p>Контакты для связи и адрес посещения будут уточнены перед запуском.</p><a href="/kontakty/">Реквизиты и форма заявки ↗</a></div>
+  </div><div className="footer-legal"><p>ООО «Корпорация Стальконструкция»<br />ИНН 7453273591 · ОГРН 1147453010231</p><p>Юридический адрес:<br />454080, Челябинск, ул. Тернопольская, д. 6, пом. 124</p><div><a href="/politika/">Политика конфиденциальности</a><a href="/soglasie/">Согласие на обработку данных</a></div></div></div></footer>;
 }
